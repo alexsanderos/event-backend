@@ -1,0 +1,14 @@
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Event.Test.deps.json
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Event.Test.runtimeconfig.json
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Event.Test.runtimeconfig.dev.json
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Event.Test.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\bin\Debug\netcoreapp2.2\Event.Test.pdb
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\obj\Debug\netcoreapp2.2\Event.Test.csprojAssemblyReference.cache
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\obj\Debug\netcoreapp2.2\Event.Test.csproj.CoreCompileInputs.cache
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\obj\Debug\netcoreapp2.2\Event.Test.AssemblyInfoInputs.cache
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\obj\Debug\netcoreapp2.2\Event.Test.AssemblyInfo.cs
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\obj\Debug\netcoreapp2.2\Event.Test.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\tests\Event.Test\obj\Debug\netcoreapp2.2\Event.Test.pdb

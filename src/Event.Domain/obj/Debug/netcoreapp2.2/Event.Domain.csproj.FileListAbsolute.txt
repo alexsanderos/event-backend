@@ -1,0 +1,12 @@
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\bin\Debug\netcoreapp2.2\Event.Domain.deps.json
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\bin\Debug\netcoreapp2.2\Event.Domain.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\bin\Debug\netcoreapp2.2\Event.Domain.pdb
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\bin\Debug\netcoreapp2.2\Event.Domain.Core.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\bin\Debug\netcoreapp2.2\Event.Domain.Core.pdb
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.csprojAssemblyReference.cache
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.csproj.CoreCompileInputs.cache
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.AssemblyInfoInputs.cache
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.AssemblyInfo.cs
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.csproj.CopyComplete
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.dll
+C:\Projetos\projetos-pessoais\tcc-eventos\eventos-backend\Event\src\Event.Domain\obj\Debug\netcoreapp2.2\Event.Domain.pdb
