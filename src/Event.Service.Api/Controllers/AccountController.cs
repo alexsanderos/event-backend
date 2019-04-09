@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Event.Application.Interfaces;
@@ -8,11 +9,13 @@ using Event.CrossCutting.Identity.Models;
 using Event.CrossCutting.Identity.Models.AccountViewModels;
 using Event.Domain.Entities;
 using Event.Domain.Interfaces;
+using Event.Domain.Interfaces.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Event.Service.Api.Controllers
 {
@@ -24,19 +27,25 @@ namespace Event.Service.Api.Controllers
         private readonly IUsuarioApplicationService _usuarioApplicationService;
 
         private readonly JwtTokenOptions _jwtTokenOptions;
+        private readonly TokenDescriptor _tokenDescriptor;
+        private readonly IUsuarioRepository _usuarioRepository;
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
                     SignInManager<ApplicationUser> signInManager,
                     ILoggerFactory loggerFactory,
                     IOptions<JwtTokenOptions> jwtTokenOptions,
+                    TokenDescriptor tokenDescriptor,
                     IUser user,
+                    IUsuarioRepository usuarioRepository,
                     IUsuarioApplicationService usuarioApplicationService) : base(user)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtTokenOptions = jwtTokenOptions.Value;
             _usuarioApplicationService = usuarioApplicationService;
+            _tokenDescriptor = tokenDescriptor;
+            _usuarioRepository = usuarioRepository;
 
             ThrowIfInvalidOptions(_jwtTokenOptions);
             _logger = loggerFactory.CreateLogger<AccountController>();
@@ -66,7 +75,7 @@ namespace Event.Service.Api.Controllers
 
                 var usuario = new Usuario();
                 usuario.Id = Guid.Parse(user.Id);
-                usuario.Nome = user.UserName;
+                usuario.Nome = model.Nome;
                 usuario.CPF = model.CPF;
                 usuario.DataNascimento = model.DataNascimento;
                 usuario.Email = user.Email;
@@ -120,30 +129,41 @@ namespace Event.Service.Api.Controllers
             var user = await _userManager.FindByEmailAsync(login.Email);
             var userClaims = await _userManager.GetClaimsAsync(user);
 
-            //Carrega configurações credentials
-            //_jwtTokenOptions.SigningConfigurations();
-
             userClaims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
             userClaims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
-            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, await _jwtTokenOptions.JtiGenerator()));
-            userClaims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtTokenOptions.IssuedAt).ToString(), ClaimValueTypes.Integer64));
-            
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+            userClaims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
 
-            var jwt = new JwtSecurityToken(
-                  issuer: _jwtTokenOptions.Issuer,
-                  audience: _jwtTokenOptions.Audience,
-                  claims: userClaims,
-                  notBefore: _jwtTokenOptions.NotBefore,
-                  expires: _jwtTokenOptions.Expiration,
-                  signingCredentials: _jwtTokenOptions.SigningCredentials);
+            // Necessário converver para IdentityClaims
+            var identityClaims = new ClaimsIdentity();
+            identityClaims.AddClaims(userClaims);
 
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var handler = new JwtSecurityTokenHandler();
+            var signingConf = new SigningCredentialsConfiguration();
+            var securityToken = handler.CreateToken(new SecurityTokenDescriptor
+            {
+                Issuer = _tokenDescriptor.Issuer,
+                Audience = _tokenDescriptor.Audience,
+                SigningCredentials = signingConf.SigningCredentials,
+                Subject = identityClaims,
+                NotBefore = DateTime.Now,
+                Expires = DateTime.Now.AddMinutes(_tokenDescriptor.MinutesValid)
+            });
+
+            var encodedJwt = handler.WriteToken(securityToken);
+            var userUser = _usuarioRepository.ObterUsuarioPeloId(Guid.Parse(user.Id));
 
             var response = new
             {
                 access_token = encodedJwt,
-                expires_in = (int)_jwtTokenOptions.ValidFor.TotalSeconds,
-                user = user
+                expires_in = DateTime.Now.AddMinutes(_tokenDescriptor.MinutesValid),
+                user = new
+                {
+                    id = user.Id,
+                    nome = userUser.Nome,
+                    email = userUser.Email,
+                    claims = userClaims.Select(c => new { c.Type, c.Value })
+                }
             };
 
             return response;

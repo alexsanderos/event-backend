@@ -28,7 +28,7 @@ namespace Event.Service.Api.Controllers
 
         [HttpGet]
         [Route("eventos")]
-        [AllowAnonymous]
+        [Authorize]
         public IEnumerable<EventoViewModel> Get()
         {
             return _mapper.Map<List<EventoViewModel>>(_EventoApplicationService.GetAll());
@@ -36,7 +36,7 @@ namespace Event.Service.Api.Controllers
 
         [HttpPost]
         [Route("eventos")]
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Post([FromBody]EventoViewModel eventoViewModel)
         {
             if (!ModelState.IsValid)

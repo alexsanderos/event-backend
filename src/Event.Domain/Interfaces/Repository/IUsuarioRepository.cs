@@ -7,6 +7,6 @@ namespace Event.Domain.Interfaces.Repository
 {
     public interface IUsuarioRepository : IRepositoryBase<Usuario>
     {
-
+        Usuario ObterUsuarioPeloId(Guid id);
     }
 }

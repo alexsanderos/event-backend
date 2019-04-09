@@ -25,8 +25,12 @@ namespace Event.Infra.Data.Mappings
                 .HasColumnName("TXT_SUBTITULO")
                 .IsRequired();
 
-            builder.Property(e => e.Descricao)
-                .HasColumnName("TXT_DESCRICAO")
+            builder.Property(e => e.DescricaoCurta)
+                .HasColumnName("TXT_DESCRICAO_CURTA")
+                .IsRequired();
+
+            builder.Property(e => e.DescricaoLonga)
+                .HasColumnName("TXT_DESCRICAO_LONGA")
                 .IsRequired();
 
             builder.HasMany(c => c.Agendamentos)
