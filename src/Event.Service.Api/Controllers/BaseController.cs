@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Event.Domain.Core;
 using Event.Domain.Interfaces;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,14 @@ namespace Event.Service.Api.Controllers
             {
                 var erroMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
                 NotificarErro(string.Empty, erroMsg);
+            }
+        }
+
+        protected void NotificarErrosValidation(ValidationResult result)
+        {
+            foreach (var erro in result.Errors)
+            {
+                this.NotificarErro(erro.ErrorCode, erro.ErrorMessage);
             }
         }
 

@@ -18,6 +18,5 @@ namespace Event.Application.ViewModels
         public string DescricaoLonga { get; set; }
         public int Vagas { get; set; }
         public Guid IdCategoria { get; set; }
-        public ICollection<Agenda> Agendamentos { get; set; }
     }
 }

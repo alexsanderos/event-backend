@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Event.Application.Interfaces;
 using Event.Application.ViewModels;
@@ -55,8 +53,16 @@ namespace Event.Service.Api.Controllers
 
             var evento = _mapper.Map<Evento>(eventoViewModel);
 
-            _EventoApplicationService.Add(evento);
-
+            if (evento.EhValido())
+            {
+                _EventoApplicationService.Add(evento);
+            }
+            else
+            {
+                NotificarErrosValidation(evento.ValidationResult);
+                return Response();
+            }
+            
             return Response(evento);
         }
 
@@ -73,7 +79,15 @@ namespace Event.Service.Api.Controllers
 
             var categoria = _mapper.Map<Categoria>(categoriaViewModel);
 
-            _EventoApplicationService.AdicionaCategoria(categoria);
+            if (categoria.EhValido())
+            {
+                _EventoApplicationService.AdicionaCategoria(categoria);
+            }
+            else
+            {
+                NotificarErrosValidation(categoria.ValidationResult);
+                return Response();
+            }
 
             return Response(categoria);
         }
