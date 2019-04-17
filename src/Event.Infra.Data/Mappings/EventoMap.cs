@@ -33,8 +33,16 @@ namespace Event.Infra.Data.Mappings
                 .HasColumnName("TXT_DESCRICAO_LONGA")
                 .IsRequired();
 
+            builder.Property(e => e.Vagas)
+                .HasColumnName("INT_VAGAS")
+                .IsRequired();
+
             builder.HasMany(c => c.Agendamentos)
                 .WithOne(e => e.Evento);
+
+            builder.HasOne(e => e.Categoria)
+                .WithMany(o => o.Eventos)
+                .HasForeignKey(e => e.IdCategoria);
 
             builder.Ignore(e => e.ValidationResult);
 

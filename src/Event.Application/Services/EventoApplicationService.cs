@@ -19,5 +19,20 @@ namespace Event.Application.Services
         {
             _eventoService = eventoService;
         }
+
+        public Categoria GetCategoriaById(int id)
+        {
+            return _eventoService.GetCategoriaById(id);
+        }
+
+        public IEnumerable<Categoria> GetAllCategoria()
+        {
+            return _eventoService.GetAllCategoria();
+        }
+
+        public void AdicionaCategoria(Categoria categoria)
+        {
+            _eventoService.AdicionaCategoria(categoria);
+        }
     }
 }

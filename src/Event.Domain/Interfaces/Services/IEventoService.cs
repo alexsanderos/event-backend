@@ -7,5 +7,8 @@ namespace Event.Domain.Interfaces.Services
 {
     public interface IEventoService : IServiceBase<Evento>
     {
+        Categoria GetCategoriaById(int id);
+        IEnumerable<Categoria> GetAllCategoria();
+        void AdicionaCategoria(Categoria categoria);
     }
 }

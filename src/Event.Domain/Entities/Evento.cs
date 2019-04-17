@@ -11,9 +11,11 @@ namespace Event.Domain.Entities
         public Guid Id { get; set; }
         public string Titulo { get; set; }
         public string Subtitulo { get; set; }
+        public int Vagas { get; set; }
         public string DescricaoCurta { get; set; }
         public string DescricaoLonga { get; set; }
-        public virtual ICollection<CategoriaEvento> CategoriaEventos { get; set; }
+        public Guid IdCategoria { get; set; }
+        public virtual Categoria Categoria { get; set; }
         public virtual ICollection<UsuarioEvento> UsuarioEventos { get; set; }
         public virtual ICollection<Agenda> Agendamentos { get; set; }
 

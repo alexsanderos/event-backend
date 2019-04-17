@@ -9,6 +9,7 @@ namespace Event.Application.AutoMapper
         public ViewModelToDomainMappingProfile()
         {
             CreateMap<EventoViewModel, Evento>();
+            CreateMap<CategoriaViewModel, Categoria>();
         }
     }
 }

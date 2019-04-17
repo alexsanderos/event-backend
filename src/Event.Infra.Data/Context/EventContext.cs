@@ -21,7 +21,6 @@ namespace Event.Infra.Data.Context
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new CategoriaMap());
             modelBuilder.ApplyConfiguration(new UsuarioEventoMap());
-            modelBuilder.ApplyConfiguration(new CategoriaEventoMap());
             modelBuilder.ApplyConfiguration(new AgendaMap());
 
 

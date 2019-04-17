@@ -11,7 +11,7 @@ namespace Event.Domain.Entities
     {
         public Guid Id { get; set; }
         public string Nome { get; set; }
-        public virtual ICollection<CategoriaEvento> CategoriaEventos { get; set; }
+        public virtual ICollection<Evento> Eventos { get; set; }
 
         public override bool EhValido()
         {

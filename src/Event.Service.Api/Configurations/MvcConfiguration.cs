@@ -23,10 +23,17 @@ namespace Event.Service.Api.Configurations
                 .Configure(tokenConfigurations);
             services.AddSingleton(tokenConfigurations);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(x =>
+                {
+                    x.Password.RequireDigit = false;
+                    x.Password.RequireLowercase = false;
+                    x.Password.RequireUppercase = false;
+                    x.Password.RequireNonAlphanumeric = false;
+                    x.Password.RequiredLength = 3;
+                })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

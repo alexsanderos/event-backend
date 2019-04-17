@@ -28,15 +28,23 @@ namespace Event.Service.Api.Controllers
 
         [HttpGet]
         [Route("eventos")]
-        [Authorize]
+        [AllowAnonymous]
         public IEnumerable<EventoViewModel> Get()
+        {
+            return _mapper.Map<List<EventoViewModel>>(_EventoApplicationService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("meus-eventos")]
+        [Authorize]
+        public IEnumerable<EventoViewModel> MeusEventos()
         {
             return _mapper.Map<List<EventoViewModel>>(_EventoApplicationService.GetAll());
         }
 
         [HttpPost]
         [Route("eventos")]
-        [Authorize]
+        [AllowAnonymous]
         public IActionResult Post([FromBody]EventoViewModel eventoViewModel)
         {
             if (!ModelState.IsValid)
@@ -52,5 +60,30 @@ namespace Event.Service.Api.Controllers
             return Response(evento);
         }
 
+        [HttpPost]
+        [Route("categorias")]
+        [AllowAnonymous]
+        public IActionResult AdicionarCategoria([FromBody]CategoriaViewModel categoriaViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                NotificarErroModelInvalida();
+                return Response();
+            }
+
+            var categoria = _mapper.Map<Categoria>(categoriaViewModel);
+
+            _EventoApplicationService.AdicionaCategoria(categoria);
+
+            return Response(categoria);
+        }
+
+        [HttpGet]
+        [Route("categorias")]
+        [AllowAnonymous]
+        public IEnumerable<CategoriaViewModel> BuscarCategorias()
+        {
+            return _mapper.Map<List<CategoriaViewModel>>(_EventoApplicationService.GetAllCategoria());
+        }
     }
 }

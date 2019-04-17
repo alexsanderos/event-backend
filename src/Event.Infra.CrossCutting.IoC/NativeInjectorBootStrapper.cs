@@ -39,6 +39,7 @@ namespace Event.Infra.CrossCutting.IoC
             // Infra - Data
             services.AddScoped<IEventoRepository, EventoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<EventContext>();
 
             // Infra - Identity
