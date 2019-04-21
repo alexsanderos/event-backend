@@ -11,18 +11,30 @@ namespace Event.Infra.Data.Repository
     {
         protected EventContext _context = new EventContext();
 
-        public void Add(TEntity obj)
+        public virtual void Add(TEntity obj)
         {
             _context.Set<TEntity>().Add(obj);
             _context.SaveChanges();
         }
 
-        public TEntity GetById(int id)
+        public virtual void Update(TEntity obj)
+        {
+            _context.Set<TEntity>().Update(obj);
+            _context.SaveChanges();
+        }
+
+        public virtual void Remove(TEntity obj)
+        {
+            _context.Set<TEntity>().Remove(obj);
+            _context.SaveChanges();
+        }
+
+        public virtual TEntity GetById(Guid id)
         {
             return _context.Set<TEntity>().Find(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
         }

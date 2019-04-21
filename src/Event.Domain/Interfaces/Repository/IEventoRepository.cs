@@ -7,5 +7,8 @@ namespace Event.Domain.Interfaces.Repository
 {
     public interface IEventoRepository : IRepositoryBase<Evento>
     {
+        ICollection<Agenda> ObterAgendamentos(Guid idEvento);
+        void RegistrarInteresse(UsuarioEvento usuarioEvento);
+        void RemoverInteresse(UsuarioEvento usuarioEvento);
     }
 }

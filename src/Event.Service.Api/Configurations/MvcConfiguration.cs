@@ -57,8 +57,8 @@ namespace Event.Service.Api.Configurations
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("PodeLer", policy => policy.RequireClaim("Evento", "Ler"));
-                options.AddPolicy("PodeGravar", policy => policy.RequireClaim("Evento", "Gravar"));
+                //options.AddPolicy("PodeLer", policy => policy.RequireClaim("Evento", "Ler"));
+                //options.AddPolicy("PodeGravar", policy => policy.RequireClaim("Evento", "Gravar"));
 
                 options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)

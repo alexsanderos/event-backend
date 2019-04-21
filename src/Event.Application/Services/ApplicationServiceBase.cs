@@ -20,7 +20,17 @@ namespace Event.Application.Services
             _serviceBase.Add(obj);
         }
 
-        public TEntity GetById(int id)
+        public void Update(TEntity obj)
+        {
+            _serviceBase.Update(obj);
+        }
+        
+        public void Remove(TEntity obj)
+        {
+            _serviceBase.Remove(obj);
+        }
+
+        public TEntity GetById(Guid id)
         {
             return _serviceBase.GetById(id);
         }

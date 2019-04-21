@@ -5,6 +5,7 @@ using Event.Application.Interfaces;
 using Event.Application.ViewModels;
 using Event.Domain.Entities;
 using Event.Domain.Interfaces;
+using Event.Domain.Interfaces.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,14 +15,20 @@ namespace Event.Service.Api.Controllers
     {
         protected readonly IUser _user;
         protected readonly IEventoApplicationService _EventoApplicationService;
+        protected readonly IEventoRepository _eventoRepository;
         protected readonly IMapper _mapper;
 
-        public EventoController( IUser user, IEventoApplicationService service, IMapper mapper)
+        public EventoController( IUser user, 
+            IEventoApplicationService service,
+            IEventoRepository eventoRepository,
+            IMapper mapper)
         :base(user)
         {
             _user = user;
             _EventoApplicationService = service;
             _mapper = mapper;
+            _eventoRepository = eventoRepository;
+
         }
 
         [HttpGet]
@@ -30,6 +37,33 @@ namespace Event.Service.Api.Controllers
         public IEnumerable<EventoViewModel> Get()
         {
             return _mapper.Map<List<EventoViewModel>>(_EventoApplicationService.GetAll());
+        }
+
+        [HttpGet]
+        [Route("eventos/{id}")]
+        [AllowAnonymous]
+        public EventoViewModel Get(Guid id)
+        {
+            return _mapper.Map<EventoViewModel>(_EventoApplicationService.GetById(id));
+        }
+
+        [HttpDelete]
+        [Route("eventos/{id}")]
+        [Authorize]
+        public IActionResult Delete(Guid id)
+        {
+            var eventoViewModel = new EventoViewModel { Id = id };
+            _EventoApplicationService.Remove(_mapper.Map<Evento>(eventoViewModel));
+
+            return Response(eventoViewModel);
+        }
+
+        [HttpGet]
+        [Route("eventos/{id}/agendamentos")]
+        [AllowAnonymous]
+        public ICollection<AgendaViewModel> GetAgendamentos(Guid id)
+        {
+            return _mapper.Map<ICollection<AgendaViewModel>>(_eventoRepository.ObterAgendamentos(id));
         }
 
         [HttpGet]
@@ -63,7 +97,55 @@ namespace Event.Service.Api.Controllers
                 return Response();
             }
             
-            return Response(evento);
+            return Response(_mapper.Map<EventoViewModel>(evento));
+        }
+
+        [HttpPut]
+        [Route("eventos")]
+        [AllowAnonymous]
+        public IActionResult Put([FromBody]EventoViewModel eventoViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                NotificarErroModelInvalida();
+                return Response();
+            }
+
+            var evento = _mapper.Map<Evento>(eventoViewModel);
+
+            if (evento.EhValido())
+            {
+                _EventoApplicationService.Update(evento);
+            }
+            else
+            {
+                NotificarErrosValidation(evento.ValidationResult);
+                return Response();
+            }
+
+            return Response(_mapper.Map<EventoViewModel>(evento));
+        }
+
+        [HttpPost]
+        [Route("eventos/{id}/queroir")]
+        [Authorize]
+        public IActionResult QueroIr(Guid id)
+        {
+            var usuarioEventoVm = new UsuarioEventoViewModel() {Ativo = true, IdUsuario = UsuarioId, IdEvento = id};
+            _EventoApplicationService.RegistrarInteresse(_mapper.Map<UsuarioEvento>(usuarioEventoVm));
+
+            return Response(usuarioEventoVm);
+        }
+
+        [HttpPost]
+        [Route("eventos/{id}/desistir")]
+        [Authorize]
+        public IActionResult Desistir(Guid id)
+        {
+            var usuarioEventoVm = new UsuarioEventoViewModel() { Ativo = true, IdUsuario = UsuarioId, IdEvento = id };
+            _EventoApplicationService.RemoverInteresse(_mapper.Map<UsuarioEvento>(usuarioEventoVm));
+
+            return Response(usuarioEventoVm);
         }
 
         [HttpPost]

@@ -10,6 +10,8 @@ namespace Event.Application.AutoMapper
         {
             CreateMap<EventoViewModel, Evento>();
             CreateMap<CategoriaViewModel, Categoria>();
+            CreateMap<AgendaViewModel, Agenda>();
+            CreateMap<UsuarioEventoViewModel, UsuarioEvento>();
         }
     }
 }

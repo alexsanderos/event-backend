@@ -44,9 +44,11 @@ namespace Event.Service.Api
             services.AddMvcSecurity(Configuration);
 
             services.AddOptions();
+
             services.AddMvc(options =>
             {
                 options.OutputFormatters.Remove(new XmlDataContractSerializerOutputFormatter());
+                options.RespectBrowserAcceptHeader = true;
                 options.UseCentralRoutePrefix(new RouteAttribute("api/v{version}"));
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

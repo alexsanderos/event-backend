@@ -20,7 +20,7 @@ namespace Event.Domain.Services
         }
 
 
-        public Categoria GetCategoriaById(int id)
+        public Categoria GetCategoriaById(Guid id)
         {
             return _categoriaRepository.GetById(id);
         }
@@ -33,6 +33,16 @@ namespace Event.Domain.Services
         public void AdicionaCategoria(Categoria categoria)
         {
             _categoriaRepository.Add(categoria);
+        }
+
+        public void RegistrarInteresse(UsuarioEvento usuarioEvento)
+        {
+            _eventoRepository.RegistrarInteresse(usuarioEvento);
+        }
+
+        public void RemoverInteresse(UsuarioEvento usuarioEvento)
+        {
+            _eventoRepository.RemoverInteresse(usuarioEvento);
         }
     }
 }

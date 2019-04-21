@@ -18,14 +18,7 @@ namespace Event.Infra.Data.Mappings
 
             builder.Property(x => x.IdEvento).HasColumnName("UK_EVENTO").IsRequired();
             builder.Property(x => x.IdUsuario).HasColumnName("UK_USUARIO").IsRequired();
-
-            builder.Property(e => e.DataCriacao)
-                .HasColumnName("DT_CRIACAO")
-                .HasColumnType("datetime");
-
-            builder.Property(e => e.DataAtualizacao)
-                .HasColumnName("DT_ATUALIZACAO")
-                .HasColumnType("datetime");
+            builder.Property(x => x.Ativo).HasColumnName("FL_STATUS").IsRequired();
 
             // Foreign keys
             builder.HasOne(bc => bc.Usuario)
@@ -34,7 +27,7 @@ namespace Event.Infra.Data.Mappings
 
             builder.HasOne(bc => bc.Evento)
                 .WithMany(c => c.UsuarioEventos)
-                .HasForeignKey(bc => bc.IdUsuario);
+                .HasForeignKey(bc => bc.IdEvento);
             
         }
     }

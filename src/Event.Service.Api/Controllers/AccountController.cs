@@ -29,6 +29,7 @@ namespace Event.Service.Api.Controllers
         private readonly JwtTokenOptions _jwtTokenOptions;
         private readonly TokenDescriptor _tokenDescriptor;
         private readonly IUsuarioRepository _usuarioRepository;
+        protected Guid UsuarioId { get; set; }
 
         public AccountController(
                     UserManager<ApplicationUser> userManager,
@@ -49,6 +50,10 @@ namespace Event.Service.Api.Controllers
 
             ThrowIfInvalidOptions(_jwtTokenOptions);
             _logger = loggerFactory.CreateLogger<AccountController>();
+            if (user.IsAuthenticated())
+            {
+                UsuarioId = user.GetUserId();
+            }
         }
 
         private static long ToUnixEpochDate(DateTime date)

@@ -20,7 +20,7 @@ namespace Event.Application.Services
             _eventoService = eventoService;
         }
 
-        public Categoria GetCategoriaById(int id)
+        public Categoria GetCategoriaById(Guid id)
         {
             return _eventoService.GetCategoriaById(id);
         }
@@ -33,6 +33,16 @@ namespace Event.Application.Services
         public void AdicionaCategoria(Categoria categoria)
         {
             _eventoService.AdicionaCategoria(categoria);
+        }
+
+        public void RegistrarInteresse(UsuarioEvento usuarioEvento)
+        {
+            _eventoService.RegistrarInteresse(usuarioEvento);
+        }
+
+        public void RemoverInteresse(UsuarioEvento usuarioEvento)
+        {
+            _eventoService.RemoverInteresse(usuarioEvento);
         }
     }
 }

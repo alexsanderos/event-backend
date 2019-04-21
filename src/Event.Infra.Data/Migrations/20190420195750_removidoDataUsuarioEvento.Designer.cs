@@ -4,14 +4,16 @@ using Event.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Event.Infra.Data.Migrations
 {
     [DbContext(typeof(EventContext))]
-    partial class EventContextModelSnapshot : ModelSnapshot
+    [Migration("20190420195750_removidoDataUsuarioEvento")]
+    partial class removidoDataUsuarioEvento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,9 +132,6 @@ namespace Event.Infra.Data.Migrations
                     b.Property<Guid>("IdUsuario")
                         .HasColumnName("UK_USUARIO");
 
-                    b.Property<bool>("Ativo")
-                        .HasColumnName("FL_STATUS");
-
                     b.HasKey("IdEvento", "IdUsuario");
 
                     b.HasIndex("IdUsuario");
@@ -160,7 +159,7 @@ namespace Event.Infra.Data.Migrations
                 {
                     b.HasOne("Event.Domain.Entities.Evento", "Evento")
                         .WithMany("UsuarioEventos")
-                        .HasForeignKey("IdEvento")
+                        .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Event.Domain.Entities.Usuario", "Usuario")

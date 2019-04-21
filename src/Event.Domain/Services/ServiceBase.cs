@@ -15,7 +15,7 @@ namespace Event.Domain.Services
             _repository = repository;
         }
 
-        public TEntity GetById(int id)
+        public TEntity GetById(Guid id)
         {
             return _repository.GetById(id);
         }
@@ -33,6 +33,16 @@ namespace Event.Domain.Services
         public void Add(TEntity obj)
         {
             _repository.Add(obj);
+        }
+
+        public void Remove(TEntity obj)
+        {
+            _repository.Remove(obj);
+        }
+
+        public void Update(TEntity obj)
+        {
+            _repository.Update(obj);
         }
 
     }

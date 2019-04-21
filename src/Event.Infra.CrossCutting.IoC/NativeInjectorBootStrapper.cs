@@ -30,7 +30,7 @@ namespace Event.Infra.CrossCutting.IoC
             services.AddScoped<IEventoApplicationService, EventoApplicationService>();
 
             services.AddScoped<IUsuarioApplicationService, UsuarioApplicationService>();
-
+            
             // Domain - Commands
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
