@@ -31,8 +31,9 @@ namespace Event.Infra.Data.Repository
         {
             
             var entity = this._context.Set<Evento>()
-                .Include(x => x.Agendamentos).FirstOrDefault();
-
+                .Include(x => x.Agendamentos)
+                .FirstOrDefault(x => x.Id == evento.Id);
+            
             this._context.Entry(entity).CurrentValues.SetValues(evento);
 
             foreach (var agenda in entity.Agendamentos)
@@ -50,7 +51,7 @@ namespace Event.Infra.Data.Repository
                     this._context.Set<Agenda>().Add(agendamento);
                 }
             }
-
+            
             this._context.SaveChanges();
         }
 
@@ -61,6 +62,16 @@ namespace Event.Infra.Data.Repository
                 .Include(x => x.Categoria)
                 .Include(x => x.UsuarioEventos)
                 .ToList();
+        }
+
+        public override Evento GetById(Guid id)
+        {
+            return this._context.Set<Evento>()
+                .Select(x => x)
+                .Include(y => y.Agendamentos)
+                .Include(x => x.Categoria)
+                .Include(x => x.UsuarioEventos)
+                .FirstOrDefault(x => x.Id == id);
         }
 
         public void RegistrarInteresse(UsuarioEvento usuarioEvento)
@@ -84,6 +95,25 @@ namespace Event.Infra.Data.Repository
         {
             _context.Set<UsuarioEvento>().Remove(usuarioEvento);
             this._context.SaveChanges();
+        }
+
+        public IEnumerable<Evento> ObterEventoDoUsuario(Guid idUsuario)
+        {
+            return _context.Set<Evento>()
+                .Select(x => x)
+                .Include(x => x.Agendamentos)
+                .Include(x => x.UsuarioEventos)
+                .Where(x => x.UsuarioEventos.Any(y => y.IdUsuario == idUsuario))
+                .ToList();
+        }
+
+        public IEnumerable<Usuario> ObterInscritos(Guid idEvento)
+        {
+            return _context.Set<Usuario>()
+                .Select(x => x)
+                .Include(x => x.UsuarioEventos)
+                .Where(x => x.UsuarioEventos.Any(y => y.IdEvento == idEvento))
+                .ToList();
         }
     }
 }

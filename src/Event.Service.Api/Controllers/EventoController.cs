@@ -21,8 +21,9 @@ namespace Event.Service.Api.Controllers
         public EventoController( IUser user, 
             IEventoApplicationService service,
             IEventoRepository eventoRepository,
-            IMapper mapper)
-        :base(user)
+            IMapper mapper,
+            INotification notification)
+        :base(user, notification )
         {
             _user = user;
             _EventoApplicationService = service;
@@ -33,7 +34,7 @@ namespace Event.Service.Api.Controllers
 
         [HttpGet]
         [Route("eventos")]
-        [AllowAnonymous]
+        [Authorize]
         public IEnumerable<EventoViewModel> Get()
         {
             return _mapper.Map<List<EventoViewModel>>(_EventoApplicationService.GetAll());
@@ -67,11 +68,19 @@ namespace Event.Service.Api.Controllers
         }
 
         [HttpGet]
-        [Route("meus-eventos")]
+        [Route("eventos/{id}/inscritos")]
+        [AllowAnonymous]
+        public ICollection<UsuarioViewModel> GetInscritos(Guid id)
+        {
+            return _mapper.Map<ICollection<UsuarioViewModel>>(_eventoRepository.ObterInscritos(id));
+        }
+
+        [HttpGet]
+        [Route("eventos/meus-eventos")]
         [Authorize]
         public IEnumerable<EventoViewModel> MeusEventos()
         {
-            return _mapper.Map<List<EventoViewModel>>(_EventoApplicationService.GetAll());
+            return _mapper.Map<List<EventoViewModel>>(_eventoRepository.ObterEventoDoUsuario(UsuarioId));
         }
 
         [HttpPost]

@@ -7,6 +7,7 @@ using Event.CrossCutting.Identity.Services;
 using Event.Domain.Interfaces;
 using Event.Domain.Interfaces.Repository;
 using Event.Domain.Interfaces.Services;
+using Event.Domain.Notification;
 using Event.Domain.Services;
 using Event.Infra.Data.Context;
 using Event.Infra.Data.Repository;
@@ -34,6 +35,7 @@ namespace Event.Infra.CrossCutting.IoC
             // Domain - Commands
             services.AddScoped<IEventoService, EventoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<INotification, Notification>();
 
 
             // Infra - Data

@@ -39,7 +39,8 @@ namespace Event.Service.Api.Controllers
                     TokenDescriptor tokenDescriptor,
                     IUser user,
                     IUsuarioRepository usuarioRepository,
-                    IUsuarioApplicationService usuarioApplicationService) : base(user)
+                    IUsuarioApplicationService usuarioApplicationService,
+                    INotification notification) : base(user, notification)
         {
             _userManager = userManager;
             _signInManager = signInManager;

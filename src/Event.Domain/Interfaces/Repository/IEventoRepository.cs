@@ -10,5 +10,7 @@ namespace Event.Domain.Interfaces.Repository
         ICollection<Agenda> ObterAgendamentos(Guid idEvento);
         void RegistrarInteresse(UsuarioEvento usuarioEvento);
         void RemoverInteresse(UsuarioEvento usuarioEvento);
+        IEnumerable<Evento> ObterEventoDoUsuario(Guid idUsuario);
+        IEnumerable<Usuario> ObterInscritos(Guid idEvento);
     }
 }

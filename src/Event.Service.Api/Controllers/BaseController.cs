@@ -15,14 +15,15 @@ namespace Event.Service.Api.Controllers
     {
         protected Guid UsuarioId { get; set; }
         protected List<DomainNotifications> notifications { get; set; }
+        protected readonly INotification _notification;
 
-        protected BaseController(IUser user)
+        protected BaseController(IUser user, INotification notification )
         {
             if (user.IsAuthenticated())
             {
                 UsuarioId = user.GetUserId();
             }
-            notifications = new List<DomainNotifications>();
+            _notification = notification;
         }
 
         protected new IActionResult Response(object result = null)
@@ -39,13 +40,13 @@ namespace Event.Service.Api.Controllers
             return BadRequest(new
             {
                 success = false,
-                errors = notifications.Select(n => n.Value)
+                errors = _notification.GetNotifications().Select(n => n.Value)
             });
         }
 
         protected bool OperacaoValida()
         {
-            return notifications.Count == 0;
+            return !_notification.HasNotifications();
         }
 
         protected void NotificarErroModelInvalida()
@@ -68,7 +69,7 @@ namespace Event.Service.Api.Controllers
 
         protected void NotificarErro(string codigo, string mensagem)
         {
-            this.notifications.Add(new DomainNotifications(codigo, mensagem));
+            _notification.AddNotification(new DomainNotifications(codigo, mensagem));
         }
 
         protected void AdicionarErrosIdentity(IdentityResult result)
